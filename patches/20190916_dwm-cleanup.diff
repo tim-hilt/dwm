@@ -1,0 +1,52 @@
+--- b/dwm.c	2019-09-18 20:11:54.060598921 +0200
++++ a/dwm.c	2019-09-18 21:00:54.844923573 +0200
+@@ -490,10 +490,8 @@
+ 			arg.ui = 1 << i;
+ 		} else if (ev->x < x + blw)
+ 			click = ClkLtSymbol;
+-		else if (ev->x > selmon->ww - TEXTW(stext) - getsystraywidth())
+-			click = ClkStatusText;
+ 		else
+-			click = ClkWinTitle;
++			click = ClkStatusText;
+ 	} else if ((c = wintoclient(ev->window))) {
+ 		focus(c);
+ 		restack(selmon);
+@@ -838,8 +836,6 @@
+ drawbar(Monitor *m)
+ {
+ 	int x, w, sw = 0, stw = 0;
+-	int boxs = drw->fonts->h / 9;
+-	int boxw = drw->fonts->h / 6 + 2;
+ 	unsigned int i, occ = 0, urg = 0;
+ 	Client *c;
+ 
+@@ -875,15 +871,8 @@
+ 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+ 
+ 	if ((w = m->ww - sw - stw - x) > bh) {
+-		if (m->sel) {
+-			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+-			if (m->sel->isfloating)
+-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+-		} else {
+ 			drw_setscheme(drw, scheme[SchemeNorm]);
+ 			drw_rect(drw, x, 0, w, bh, 1, 1);
+-		}
+ 	}
+ 	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
+ }
+@@ -1216,6 +1205,12 @@
+ 	c->bw = borderpx;
+ 
+ 	wc.border_width = c->bw;
++
++	if (c->x == selmon->wx)
++	  c->x += (c->mon->ww - WIDTH(c)) / 2 - c->bw;
++	if (c->y == selmon->wy)
++	  c->y += (c->mon->wh - HEIGHT(c)) / 2 - c->bw;
++
+ 	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
+ 	XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
+ 	configure(c); /* propagates border_width, if size doesn't change */
