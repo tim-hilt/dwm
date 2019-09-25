@@ -60,7 +60,7 @@ sed -i 's/snap      = 32/snap      = 25/' /tmp/$systray
 
 # Uninstall and remove current version of dwm
 echo -e "\n${FORMAT_RED}Uninstalling dwm$FORMAT_NONE"
-cd /home/tim/dwm/src/
+cd /home/tim/git/dwm/src/
 sudo make uninstall
 cd ../
 rm -rf ./src/

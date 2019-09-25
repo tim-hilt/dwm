@@ -54,3 +54,8 @@ dkms.conf
 # Patching stuff
 *.orig
 *.rej
+
+# Miscellaneous
+src/LICENSE
+src/README
+src/dwm.png

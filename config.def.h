@@ -75,7 +75,8 @@ static const char *lum_down[]    = { "xbacklight", "-6%", NULL};
 static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+", "-q", NULL };
 static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
 static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
-static const char *lockscreen[]  = { "betterlockscreen", "-l", "-t", "Passwort eingeben", NULL};
+static const char *lockscreen[]  = { "betterlockscreen", "-l", "-t", "Passwort eingeben", NULL };
+static const char *R[]           = { "R", "-q", "--no-save", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -88,6 +89,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = menucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = ranger } },
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          {.v = R } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = studying } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = literature } },
 	{ MODKEY,                       XK_Escape, spawn,          {.v = lockscreen } },
