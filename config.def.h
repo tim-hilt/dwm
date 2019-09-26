@@ -76,7 +76,7 @@ static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+",
 static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
 static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
 static const char *lockscreen[]  = { "betterlockscreen", "-l", "-t", "Passwort eingeben", NULL };
-static const char *R[]           = { "R", "-q", "--no-save", NULL };
+static const char *R[]           = { "alacritty", "-e", "R", "-q", "--no-save", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
