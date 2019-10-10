@@ -13,6 +13,8 @@ focusonnetactive_url=https://dwm.suckless.org/patches/focusonnetactive/dwm-focus
 focusonnetactive=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $focusonnetactive_url)
 systray_url=https://dwm.suckless.org/patches/systray/dwm-systray-20190208-cb3f58a.diff
 systray=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $systray_url)
+centeredmaster_url=https://dwm.suckless.org/patches/centeredmaster/dwm-centeredmaster-20160719-56a31dc.diff
+centeredmaster=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centeredmaster_url)
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
@@ -47,23 +49,27 @@ if test -f "/tmp/$systray" ; then
     echo -e "$FORMAT_RED$systray exists in file system! Continuing...$FORMAT_NONE";
 else
     wget -P /tmp/ $systray_url
+    sed -i '1,15d' /tmp/$systray
 fi
 
-if test -f "/tmp/$centertitle" ; then
-    echo -e "$FORMAT_RED$centertitle exists in file system! Continuing...$FORMAT_NONE";
+if test -f "/tmp/$centeredmaster" ; then
+    echo -e "$FORMAT_RED$centeredmaster exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $centertitle_url
+    wget -P /tmp/ $centeredmaster_url
+    sed -i '1,22d' /tmp/$centeredmaster
 fi
 
 sed -i 's/borderpx  = 1/borderpx  = 3/' /tmp/$systray
 sed -i 's/snap      = 32/snap      = 25/' /tmp/$systray
 
 # Uninstall and remove current version of dwm
-echo -e "\n${FORMAT_RED}Uninstalling dwm$FORMAT_NONE"
-cd /home/tim/git/dwm/src/
-sudo make uninstall
-cd ../
-rm -rf ./src/
+if [ -d ./src/ ]; then
+    echo -e "\n${FORMAT_RED}Uninstalling dwm$FORMAT_NONE"
+    cd /home/tim/git/dwm/src/
+    sudo make uninstall
+    cd ../
+    rm -rf ./src/
+fi
 
 # Clone fresh
 echo -e "\n${FORMAT_RED}Clone fresh dwm$FORMAT_NONE"
@@ -77,15 +83,8 @@ cp ./config.def.h ./src/
 cd ./src/
 echo -e "\n${FORMAT_RED}[Patching] $systray$FORMAT_NONE"
 patch < "/tmp/$systray"
-
-# -----------------
-# Critical Section
 echo -e "\n${FORMAT_RED}[Patching] $notitle$FORMAT_NONE"
 patch < "/tmp/$notitle"
-# echo -e "\n${FORMAT_RED}[Patching] $centertitle$FORMAT_NONE"
-# patch < "/tmp/$centertitle"
-# -----------------
-
 echo -e "\n${FORMAT_RED}[Patching] $pertag$FORMAT_NONE"
 patch < "/tmp/$pertag"
 echo -e "\n${FORMAT_RED}[Patching] $hidevacanttags$FORMAT_NONE"
@@ -94,6 +93,10 @@ echo -e "\n${FORMAT_RED}[Patching] dwm-center.diff$FORMAT_NONE"
 patch < ../patches/dwm-center.diff
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
+echo -e "\n${FORMAT_RED}[Patching] $centeredmaster$FORMAT_NONE"
+patch < "/tmp/$centeredmaster"
+
+# Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"
 patch < ../patches/20190916_dwm-cleanup.diff
 
@@ -102,8 +105,6 @@ echo -e "\n${FORMAT_GREEN}Patching ends here!$FORMAT_NONE"
 # Will activate focus on click, rather than on hover
 sed -i '/\[EnterNotify\] = enternotify,/d' dwm.c
 sed -i '/static void enternotify(XEvent \*e)\;/d' dwm.c
-
-# Get rid of Warnings
 
 # Install new Version
 echo -e "\n${FORMAT_GREEN}Installing new dwm$FORMAT_NONE"
