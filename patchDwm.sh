@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Initializing variables
 notitle_url=https://dwm.suckless.org/patches/notitle/dwm-notitle-6.2.diff
@@ -18,44 +18,46 @@ centeredmaster=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centeredmaster_ur
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
+FORMAT_BLUE="\033[44m"
 FORMAT_NONE="\033[0m"
 
 # Download patches to /tmp/
 if test -f "/tmp/$notitle" ; then
     echo -e "$FORMAT_RED$notitle exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $notitle_url;
+    wget -P -v /tmp/ $notitle_url
 fi
 
 if test -f "/tmp/$pertag" ; then
     echo -e "$FORMAT_RED$pertag exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $pertag_url;
+    wget -P -v /tmp/ $pertag_url
 fi
 
 if test -f "/tmp/$hidevacanttags" ; then
     echo -e "$FORMAT_RED$hidevacanttags exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $hidevacanttags_url;
+    wget -P -v /tmp/ $hidevacanttags_url
 fi
 
 if test -f "/tmp/$focusonnetactive" ; then
     echo -e "$FORMAT_RED$focusonnetactive exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $focusonnetactive_url;
+    wget -P -v /tmp/ $focusonnetactive_url;
+    
 fi
 
 if test -f "/tmp/$systray" ; then
     echo -e "$FORMAT_RED$systray exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $systray_url
+    wget -P -v /tmp/ $systray_url
     sed -i '1,15d' /tmp/$systray
 fi
 
 if test -f "/tmp/$centeredmaster" ; then
     echo -e "$FORMAT_RED$centeredmaster exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P /tmp/ $centeredmaster_url
+    wget -P -v /tmp/ $centeredmaster_url
     sed -i '1,22d' /tmp/$centeredmaster
 fi
 
@@ -83,23 +85,28 @@ cp ./config.def.h ./src/
 cd ./src/
 echo -e "\n${FORMAT_RED}[Patching] $systray$FORMAT_NONE"
 patch < "/tmp/$systray"
+
 echo -e "\n${FORMAT_RED}[Patching] $notitle$FORMAT_NONE"
 patch < "/tmp/$notitle"
+
 echo -e "\n${FORMAT_RED}[Patching] $pertag$FORMAT_NONE"
 patch < "/tmp/$pertag"
+
 echo -e "\n${FORMAT_RED}[Patching] $hidevacanttags$FORMAT_NONE"
 patch < "/tmp/$hidevacanttags"
+
 echo -e "\n${FORMAT_RED}[Patching] dwm-center.diff$FORMAT_NONE"
 patch < ../patches/dwm-center.diff
+
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
+
 echo -e "\n${FORMAT_RED}[Patching] $centeredmaster$FORMAT_NONE"
 patch < "/tmp/$centeredmaster"
 
 # Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"
 patch < ../patches/20190916_dwm-cleanup.diff
-
 echo -e "\n${FORMAT_GREEN}Patching ends here!$FORMAT_NONE"
 
 # Will activate focus on click, rather than on hover
