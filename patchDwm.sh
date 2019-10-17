@@ -13,8 +13,6 @@ focusonnetactive_url=https://dwm.suckless.org/patches/focusonnetactive/dwm-focus
 focusonnetactive=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $focusonnetactive_url)
 systray_url=https://dwm.suckless.org/patches/systray/dwm-systray-20190208-cb3f58a.diff
 systray=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $systray_url)
-centeredmaster_url=https://dwm.suckless.org/patches/centeredmaster/dwm-centeredmaster-20160719-56a31dc.diff
-centeredmaster=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centeredmaster_url)
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
@@ -25,40 +23,33 @@ FORMAT_NONE="\033[0m"
 if test -f "/tmp/$notitle" ; then
     echo -e "$FORMAT_RED$notitle exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P -v /tmp/ $notitle_url
+    wget -v -P /tmp/ $notitle_url
 fi
 
 if test -f "/tmp/$pertag" ; then
     echo -e "$FORMAT_RED$pertag exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P -v /tmp/ $pertag_url
+    wget -v -P /tmp/ $pertag_url
 fi
 
 if test -f "/tmp/$hidevacanttags" ; then
     echo -e "$FORMAT_RED$hidevacanttags exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P -v /tmp/ $hidevacanttags_url
+    wget -v -P /tmp/ $hidevacanttags_url
 fi
 
 if test -f "/tmp/$focusonnetactive" ; then
     echo -e "$FORMAT_RED$focusonnetactive exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P -v /tmp/ $focusonnetactive_url;
+    wget -v -P /tmp/ $focusonnetactive_url;
     
 fi
 
 if test -f "/tmp/$systray" ; then
     echo -e "$FORMAT_RED$systray exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -P -v /tmp/ $systray_url
+    wget -v -P /tmp/ $systray_url
     sed -i '1,15d' /tmp/$systray
-fi
-
-if test -f "/tmp/$centeredmaster" ; then
-    echo -e "$FORMAT_RED$centeredmaster exists in file system! Continuing...$FORMAT_NONE";
-else
-    wget -P -v /tmp/ $centeredmaster_url
-    sed -i '1,22d' /tmp/$centeredmaster
 fi
 
 sed -i 's/borderpx  = 1/borderpx  = 3/' /tmp/$systray
@@ -100,9 +91,6 @@ patch < ../patches/dwm-center.diff
 
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
-
-echo -e "\n${FORMAT_RED}[Patching] $centeredmaster$FORMAT_NONE"
-patch < "/tmp/$centeredmaster"
 
 # Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"

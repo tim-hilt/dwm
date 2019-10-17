@@ -48,8 +48,6 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -83,15 +81,19 @@ static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-",
 static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
 static const char *lockscreen[]  = { "betterlockscreen", "-l", "-t", "Passwort eingeben", NULL };
 static const char *R[]           = { "alacritty", "-e", "R", "-q", "--no-save", NULL };
+static const char *SU[]          = { "sh", "/home/tim/scripts/TF/SU", NULL };
+static const char *SD[]          = { "sh", "/home/tim/scripts/TF/SD", NULL };
+static const char *SR[]          = { "sh", "/home/tim/scripts/TF/SR", NULL };
+static const char *SL[]          = { "sh", "/home/tim/scripts/TF/SL", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-        { 0x000000,                     0x1008ff13,spawn,          {.v = vol_up } },
-        { 0x000000,                     0x1008ff11,spawn,          {.v = vol_down } },
-        { 0x000000,                     0x1008ff02,spawn,          {.v = lum_up } },
-        { 0x000000,                     0x1008ff03,spawn,          {.v = lum_down } },
-        { 0x000000,                     0x1008ff12,spawn,          {.v = vol_mute } },
-        { 0x000000,                     XK_Print,  spawn,          {.v = screenshot } },
+    { 0x000000,                     0x1008ff13,spawn,          {.v = vol_up } },
+    { 0x000000,                     0x1008ff11,spawn,          {.v = vol_down } },
+    { 0x000000,                     0x1008ff02,spawn,          {.v = lum_up } },
+    { 0x000000,                     0x1008ff03,spawn,          {.v = lum_down } },
+    { 0x000000,                     0x1008ff12,spawn,          {.v = vol_mute } },
+    { 0x000000,                     XK_Print,  spawn,          {.v = screenshot } },
 	{ MODKEY,                       XK_d,      spawn,          {.v = menucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = ranger } },
@@ -127,6 +129,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+    { MODKEY|ShiftMask,             XK_Up,     spawn,          {.v = SU } },
+    { MODKEY|ShiftMask,             XK_Down,   spawn,          {.v = SD } },
+    { MODKEY|ShiftMask,             XK_Right,  spawn,          {.v = SR } },
+    { MODKEY|ShiftMask,             XK_Left,   spawn,          {.v = SL } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
