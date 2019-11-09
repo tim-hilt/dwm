@@ -22,7 +22,7 @@ static const char col_bgalt[]            = "#1C1E1F";
 static const char *colors[][3]           = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_bg, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_bg,  col_cyan1  },
+	[SchemeSel]  = { col_gray4, col_bg,  col_cyan  },
 };
 
 /* tagging */
@@ -45,8 +45,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
 };
 
