@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx       = 3;   /* border pixel of windows */
+static const unsigned int borderpx       = 0;   /* border pixel of windows */
 static const unsigned int snap           = 25;  /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -46,8 +46,8 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
+	{ "[]=",      tile },    /* first entry is default */
 };
 
 /* key definitions */
@@ -61,18 +61,20 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+static const char TERMINAL[] = "st";
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *menucmd[]     = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]     = { "alacritty", NULL };
-static const char *ranger[]      = { "alacritty",  "-e", "ranger", NULL };
-static const char *literature[]  = { "alacritty",  "-e", "ranger", "/home/tim/Literatur/", NULL };
-static const char *studying[]    = { "alacritty",  "-e", "ranger", "/home/tim/Studium/", NULL };
-static const char *julia[]       = { "alacritty", "-e", "julia", NULL };
-static const char *python[]      = { "alacritty", "-e", "ipython", NULL };
-static const char *battop[]      = { "alacritty", "-e", "battop", NULL};
-static const char *htop[]        = { "alacritty", "-e", "htop", "-t", NULL};
+static const char *termcmd[]     = { TERMINAL, NULL };
+static const char *ranger[]      = { TERMINAL,  "-e", "ranger", NULL };
+static const char *literature[]  = { TERMINAL,  "-e", "ranger", "/home/tim/Literatur/", NULL };
+static const char *studying[]    = { TERMINAL,  "-e", "ranger", "/home/tim/Studium/", NULL };
+static const char *julia[]       = { TERMINAL, "-e", "julia", NULL };
+static const char *python[]      = { TERMINAL, "-e", "ipython", NULL };
+static const char *battop[]      = { TERMINAL, "-e", "battop", NULL};
+static const char *htop[]        = { TERMINAL, "-e", "htop", "-t", NULL};
 static const char *screenshot[]  = { "spectacle",  NULL };
 static const char *lum_up[]      = { "light", "-A", "5", NULL};
 static const char *lum_down[]    = { "light", "-U", "5", NULL};
@@ -80,7 +82,7 @@ static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+",
 static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
 static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
 static const char *lockscreen[]  = { "betterlockscreen", "-l", "-t", "Passwort eingeben", NULL };
-static const char *R[]           = { "alacritty", "-e", "R", "-q", "--no-save", NULL };
+static const char *R[]           = { TERMINAL, "-e", "R", "-q", "--no-save", NULL };
 static const char *SU[]          = { "sh", "/home/tim/scripts/TF/SU", NULL };
 static const char *SD[]          = { "sh", "/home/tim/scripts/TF/SD", NULL };
 static const char *SR[]          = { "sh", "/home/tim/scripts/TF/SR", NULL };
@@ -116,11 +118,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_c,      center,         {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
