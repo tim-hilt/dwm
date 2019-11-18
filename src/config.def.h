@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx       = 0;   /* border pixel of windows */
+static const unsigned int borderpx       = 1;   /* border pixel of windows */
 static const unsigned int snap           = 25;  /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -15,6 +15,7 @@ static const char col_gray1[]            = "#222222";
 static const char col_gray2[]            = "#444444";
 static const char col_gray3[]            = "#bbbbbb";
 static const char col_gray4[]            = "#eeeeee";
+static const char col_gray5[]            = "#404547";
 static const char col_cyan[]             = "#005577";
 static const char col_cyan1[]            = "#00709d";
 static const char col_bg[]               = "#161819";
@@ -22,7 +23,7 @@ static const char col_bgalt[]            = "#1C1E1F";
 static const char *colors[][3]           = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_bg, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_bg,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_bg,  col_gray5  },
 };
 
 /* tagging */
@@ -39,7 +40,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -61,7 +62,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-static const char TERMINAL[] = "st";
+static const char TERMINAL[] = "alacritty";
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
