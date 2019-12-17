@@ -13,8 +13,8 @@ focusonnetactive_url=https://dwm.suckless.org/patches/focusonnetactive/dwm-focus
 focusonnetactive=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $focusonnetactive_url)
 systray_url=https://dwm.suckless.org/patches/systray/dwm-systray-20190208-cb3f58a.diff
 systray=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $systray_url)
-noborder_url=https://dwm.suckless.org/patches/noborder/dwm-noborder-6.2.diff
-noborder=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $noborder_url)
+nomonocleborders_url=https://gist.githubusercontent.com/SebastianJarsve/497b2014774c849df0132d7118cbab65/raw/20321cb4ada4e15edb93ab988a27be310158cf41/dwm-nomonocleborders-20190607-cb3f58a.diff
+nomonocleborders=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $nomonocleborders_url)
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
@@ -54,10 +54,10 @@ else
     sed -i '1,15d' "/tmp/$systray"
 fi
 
-if test -f "/tmp/$noborder" ; then
-    echo -e "$FORMAT_RED$noborder exists in file system! Continuing...$FORMAT_NONE";
+if test -f "/tmp/$nomonocleborders" ; then
+    echo -e "$FORMAT_RED$nomonocleborders exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -v -P /tmp/ $noborder_url
+    wget -v -P /tmp/ $nomonocleborders_url
 fi
 
 sed -i 's/borderpx  = 1/borderpx  = 3/' "/tmp/$systray"
@@ -100,8 +100,8 @@ patch < ../patches/dwm-center.diff
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
 
-echo -e "\n${FORMAT_RED}[Patching] $noborder$FORMAT_NONE"
-patch < "/tmp/$noborder"
+echo -e "\n${FORMAT_RED}[Patching] $nomonocleborders$FORMAT_NONE"
+patch < "/tmp/$nomonocleborders"
 
 # Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"
