@@ -3,8 +3,8 @@
 # Initializing variables
 notitle_url=https://dwm.suckless.org/patches/notitle/dwm-notitle-6.2.diff
 notitle=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $notitle_url)
-centertitle_url=https://dwm.suckless.org/patches/centeredwindowname/dwm-centeredwindowname-20180909-6.2.diff
-centertitle=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centertitle_url)
+# centertitle_url=https://dwm.suckless.org/patches/centeredwindowname/dwm-centeredwindowname-20180909-6.2.diff
+# centertitle=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centertitle_url)
 pertag_url=https://dwm.suckless.org/patches/pertag/dwm-pertag-20170513-ceac8c9.diff
 pertag=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $pertag_url)
 hidevacanttags_url=https://dwm.suckless.org/patches/hide_vacant_tags/dwm-hide_vacant_tags-6.2.diff
@@ -13,10 +13,12 @@ focusonnetactive_url=https://dwm.suckless.org/patches/focusonnetactive/dwm-focus
 focusonnetactive=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $focusonnetactive_url)
 systray_url=https://dwm.suckless.org/patches/systray/dwm-systray-20190208-cb3f58a.diff
 systray=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $systray_url)
+noborder_url=https://dwm.suckless.org/patches/noborder/dwm-noborder-6.2.diff
+noborder=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $noborder_url)
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
-FORMAT_BLUE="\033[44m"
+# FORMAT_BLUE="\033[44m"
 FORMAT_NONE="\033[0m"
 
 # Download patches to /tmp/
@@ -49,11 +51,17 @@ if test -f "/tmp/$systray" ; then
     echo -e "$FORMAT_RED$systray exists in file system! Continuing...$FORMAT_NONE";
 else
     wget -v -P /tmp/ $systray_url
-    sed -i '1,15d' /tmp/$systray
+    sed -i '1,15d' "/tmp/$systray"
 fi
 
-sed -i 's/borderpx  = 1/borderpx  = 3/' /tmp/$systray
-sed -i 's/snap      = 32/snap      = 25/' /tmp/$systray
+if test -f "/tmp/$noborder" ; then
+    echo -e "$FORMAT_RED$noborder exists in file system! Continuing...$FORMAT_NONE";
+else
+    wget -v -P /tmp/ $noborder_url
+fi
+
+sed -i 's/borderpx  = 1/borderpx  = 3/' "/tmp/$systray"
+sed -i 's/snap      = 32/snap      = 25/' "/tmp/$systray"
 
 # Uninstall and remove current version of dwm
 if [ -d ./src/ ]; then
@@ -91,6 +99,9 @@ patch < ../patches/dwm-center.diff
 
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
+
+echo -e "\n${FORMAT_RED}[Patching] $noborder$FORMAT_NONE"
+patch < "/tmp/$noborder"
 
 # Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"
