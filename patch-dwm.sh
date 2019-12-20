@@ -3,8 +3,6 @@
 # Initializing variables
 notitle_url=https://dwm.suckless.org/patches/notitle/dwm-notitle-6.2.diff
 notitle=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $notitle_url)
-# centertitle_url=https://dwm.suckless.org/patches/centeredwindowname/dwm-centeredwindowname-20180909-6.2.diff
-# centertitle=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $centertitle_url)
 pertag_url=https://dwm.suckless.org/patches/pertag/dwm-pertag-20170513-ceac8c9.diff
 pertag=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $pertag_url)
 hidevacanttags_url=https://dwm.suckless.org/patches/hide_vacant_tags/dwm-hide_vacant_tags-6.2.diff
@@ -13,8 +11,8 @@ focusonnetactive_url=https://dwm.suckless.org/patches/focusonnetactive/dwm-focus
 focusonnetactive=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $focusonnetactive_url)
 systray_url=https://dwm.suckless.org/patches/systray/dwm-systray-20190208-cb3f58a.diff
 systray=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $systray_url)
-nomonocleborders_url=https://gist.githubusercontent.com/SebastianJarsve/497b2014774c849df0132d7118cbab65/raw/20321cb4ada4e15edb93ab988a27be310158cf41/dwm-nomonocleborders-20190607-cb3f58a.diff
-nomonocleborders=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $nomonocleborders_url)
+noborders_url=https://gist.githubusercontent.com/SebastianJarsve/e7e86b26aa4a085aa819cf24975532bd/raw/2a3631f60be6431bd25375df7cdb94e7839c1ec5/dwm-noborders-20191126-cb3f58a.diff
+noborders=$(awk 'BEGIN { FS = "/" } ; { print $NF }' <<< $noborders_url)
 
 FORMAT_RED="\033[0;31m"
 FORMAT_GREEN="\033[0;32m"
@@ -54,10 +52,12 @@ else
     sed -i '1,15d' "/tmp/$systray"
 fi
 
-if test -f "/tmp/$nomonocleborders" ; then
-    echo -e "$FORMAT_RED$nomonocleborders exists in file system! Continuing...$FORMAT_NONE";
+if test -f "/tmp/$noborders" ; then
+    echo -e "$FORMAT_RED$noborders exists in file system! Continuing...$FORMAT_NONE";
 else
-    wget -v -P /tmp/ $nomonocleborders_url
+    wget -v -P /tmp/ $noborders_url
+    sed -i 's/&& (\!/\&\& ((\!/' "/tmp/$noborders"
+    sed -i 's/))))/)))))/' "/tmp/$noborders"
 fi
 
 sed -i 's/borderpx  = 1/borderpx  = 3/' "/tmp/$systray"
@@ -66,7 +66,7 @@ sed -i 's/snap      = 32/snap      = 25/' "/tmp/$systray"
 # Uninstall and remove current version of dwm
 if [ -d ./src/ ]; then
     echo -e "\n${FORMAT_RED}Uninstalling dwm$FORMAT_NONE"
-    cd /home/tim/git/dwm/src/
+    cd /home/tim/git/dwm/src/ || exit
     sudo make uninstall
     cd ../
     rm -rf ./src/
@@ -81,7 +81,7 @@ rm ./src/config.def.h
 cp ./config.def.h ./src/
 
 # Apply patches
-cd ./src/
+cd ./src/ || exit
 echo -e "\n${FORMAT_RED}[Patching] $systray$FORMAT_NONE"
 patch < "/tmp/$systray"
 
@@ -100,8 +100,8 @@ patch < ../patches/dwm-center.diff
 echo -e "\n${FORMAT_RED}[Patching] $focusonnetactive$FORMAT_NONE"
 patch < "/tmp/$focusonnetactive"
 
-echo -e "\n${FORMAT_RED}[Patching] $nomonocleborders$FORMAT_NONE"
-patch < "/tmp/$nomonocleborders"
+echo -e "\n${FORMAT_RED}[Patching] $noborders$FORMAT_NONE"
+patch < "/tmp/$noborders"
 
 # Apply Cleanup-patch, that handles the remaining stuff that didn't succeed
 echo -e "\n${FORMAT_RED}[Patching] 20190916_dwm-cleanup.diff$FORMAT_NONE"
