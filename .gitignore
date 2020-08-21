@@ -56,5 +56,9 @@ dkms.conf
 *.rej
 
 # Miscellaneous
-src/
 .ccls-cache/
+src/README
+src/.git/
+src/dwm.png
+src/LICENSE
+src/dwm
