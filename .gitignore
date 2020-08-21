@@ -57,8 +57,4 @@ dkms.conf
 
 # Miscellaneous
 .ccls-cache/
-src/.git/
-src/dwm
-src/dwm.png
-src/LICENSE
-src/README
+src/

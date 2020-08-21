@@ -1,0 +1,3 @@
+#+TITLE: dwm
+
+This repository provides a script along with patches to modify and install suckless' dwm the way i like it.
