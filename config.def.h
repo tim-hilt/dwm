@@ -71,26 +71,26 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	/* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
+	/* { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, */
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|Mod1Mask,              XK_h,      incrgaps,       {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_l,      incrgaps,       {.i = -1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_h,      incrogaps,      {.i = +1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_l,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask|ControlMask,  XK_h,      incrigaps,      {.i = +1 } },
-	{ MODKEY|Mod1Mask|ControlMask,  XK_l,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
-	{ MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } },
-	{ MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } },
+	{ MODKEY,                       XK_plus,   incrgaps,       {.i = +1 } },
+	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -1 } },
+	{ MODKEY,                       XK_o,      incrogaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,      incrogaps,      {.i = -1 } },
+	{ MODKEY,                       XK_i,      incrigaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY,                       XK_0,      togglegaps,     {0} },
+	{ MODKEY|ShiftMask,             XK_0,      defaultgaps,    {0} },
+	/* { MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } }, */
+	/* { MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } }, */
+	/* { MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } }, */
+	/* { MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } }, */
+	/* { MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } }, */
+	/* { MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } }, */
+	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
+	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
@@ -99,12 +99,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+	/* { MODKEY,                       XK_0,      view,           {.ui = ~0 } }, // View all client-windows */
+	/* { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, // Add client-window to all tags */
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } }, // Send client to different monitor
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	/* { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } }, */
+	/* { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
