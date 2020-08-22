@@ -10,6 +10,7 @@ static const unsigned int gappov    = 10;       /* vert outer gap between window
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int focusonwheel       = 0;
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -63,9 +64,19 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+static const char *lum_up[]      = { "light", "-A", "5", NULL};
+static const char *lum_down[]    = { "light", "-U", "5", NULL};
+static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+", "-q", NULL };
+static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
+static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ 0x000000,                     0x1008ff13,spawn,          {.v = vol_up } },
+	{ 0x000000,                     0x1008ff11,spawn,          {.v = vol_down } },
+    { 0x000000,                     0x1008ff02,spawn,          {.v = lum_up } },
+    { 0x000000,                     0x1008ff03,spawn,          {.v = lum_down } },
+    { 0x000000,                     0x1008ff12,spawn,          {.v = vol_mute } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },

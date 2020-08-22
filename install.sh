@@ -11,6 +11,7 @@ cd ./src/
 
 for file in ../patches/*
 do
+    echo $file
     patch < $file
 done
 
