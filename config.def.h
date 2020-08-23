@@ -13,15 +13,20 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray1[]       = "#191c21";
+static const char col_gray2[]       = "#282c34";
+static const char col_gray3[]       = "#bbc2cf";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#51afef";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray3, col_gray2, col_cyan  },
+};
+
+static const char *const autostart[] = {
+	"feh", "--bg-scale", "Downloads/wolfgang-hasselmann-sXPLQVwNfK0-unsplash.jpg", NULL,
+	NULL /* terminate */
 };
 
 /* tagging */
@@ -57,7 +62,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-#define HOLDKEY 0xffe9
+// Represents the hex-keysym that's the output of xev for a particular buttonpress
+/* #define HOLDKEY 0xffe4 */
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -76,7 +82,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
+	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	/* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
@@ -124,7 +130,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0,                            HOLDKEY,   holdbar,        {0} },
+	/* { 0,                            HOLDKEY,   holdbar,        {0} }, */
 	{ 0,                            0x1008ff13,spawn,          {.v = vol_up } },
 	{ 0,                            0x1008ff11,spawn,          {.v = vol_down } },
     { 0,                            0x1008ff02,spawn,          {.v = lum_up } },
