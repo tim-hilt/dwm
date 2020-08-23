@@ -89,7 +89,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_t, spawn,               {.v = floatingterm } },
+	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = floatingterm } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = ranger } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = studying } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = literature } },
@@ -144,7 +144,6 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },

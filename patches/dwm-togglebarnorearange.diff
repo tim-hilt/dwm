@@ -1,0 +1,12 @@
+diff --git a/dwm.c b/dwm.c
+index de87280..2cc4d6f 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1956,7 +1956,6 @@ togglebar(const Arg *arg)
+ 	selmon->showbar = !selmon->showbar;
+ 	updatebarpos(selmon);
+ 	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
+-	arrange(selmon);
+ }
+ 
+ void
