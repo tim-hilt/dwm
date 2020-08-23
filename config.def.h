@@ -62,16 +62,23 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-// Represents the hex-keysym that's the output of xev for a particular buttonpress
-/* #define HOLDKEY 0xffe4 */
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define TERMINAL "alacritty"
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray2, "-sf", col_gray3, NULL };
+static const char *termcmd[]     = { TERMINAL, NULL };
+static const char *floatingterm[]= { TERMINAL, "-t", "float", NULL };
+static const char *ranger[]      = { TERMINAL, "-e", "ranger", NULL };
+static const char *literature[]  = { TERMINAL, "-e", "ranger", "/home/tim/Literatur/", NULL };
+static const char *studying[]    = { TERMINAL, "-e", "ranger", "/home/tim/Studium/", NULL };
+static const char *julia[]       = { TERMINAL, "-e", "julia", NULL };
+static const char *python[]      = { TERMINAL, "-e", "ipython", NULL };
+static const char *htop[]        = { TERMINAL, "-e", "htop", "-t", NULL};
+static const char *screenshot[]  = { "spectacle",  NULL };
 static const char *lum_up[]      = { "light", "-A", "5", NULL};
 static const char *lum_down[]    = { "light", "-U", "5", NULL};
 static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+", "-q", NULL };
@@ -82,13 +89,18 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_t, spawn,               {.v = floatingterm } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = ranger } },
+	{ MODKEY,                       XK_s,      spawn,          {.v = studying } },
+	{ MODKEY,                       XK_l,      spawn,          {.v = literature } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = python } },
+	{ MODKEY|ShiftMask,             XK_j,      spawn,          {.v = julia } },
+	{ MODKEY,                       XK_h,      spawn,          {.v = htop } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	/* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
-	/* { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, */
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_plus,   incrgaps,       {.i = +1 } },
 	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_o,      incrogaps,      {.i = +1 } },
@@ -97,14 +109,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_i,      incrigaps,      {.i = -1 } },
 	{ MODKEY,                       XK_0,      togglegaps,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      defaultgaps,    {0} },
-	/* { MODKEY,                       XK_y,      incrihgaps,     {.i = +1 } }, */
-	/* { MODKEY,                       XK_o,      incrihgaps,     {.i = -1 } }, */
-	/* { MODKEY|ControlMask,           XK_y,      incrivgaps,     {.i = +1 } }, */
-	/* { MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } }, */
-	/* { MODKEY|Mod1Mask,              XK_y,      incrohgaps,     {.i = +1 } }, */
-	/* { MODKEY|Mod1Mask,              XK_o,      incrohgaps,     {.i = -1 } }, */
-	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
-	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -114,12 +118,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_space,  togglefloating, {0} },
-	/* { MODKEY,                       XK_0,      view,           {.ui = ~0 } }, // View all client-windows */
-	/* { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, // Add client-window to all tags */
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } }, // Send client to different monitor
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	/* { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } }, */
-	/* { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, */
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -130,12 +130,12 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	/* { 0,                            HOLDKEY,   holdbar,        {0} }, */
 	{ 0,                            0x1008ff13,spawn,          {.v = vol_up } },
 	{ 0,                            0x1008ff11,spawn,          {.v = vol_down } },
     { 0,                            0x1008ff02,spawn,          {.v = lum_up } },
     { 0,                            0x1008ff03,spawn,          {.v = lum_down } },
     { 0,                            0x1008ff12,spawn,          {.v = vol_mute } },
+    { 0,                            XK_Print,  spawn,          {.v = screenshot } },
 };
 
 /* button definitions */
