@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+
 set -euo pipefail
 
 if [ -d ./src/ ]
@@ -22,3 +23,5 @@ sed -i '/static void enternotify(XEvent \*e)\;/d' dwm.c
 cp ../config.def.h .
 make
 sudo make install
+
+# TODO: Copy and activate udev-rule
