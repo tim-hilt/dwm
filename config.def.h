@@ -26,8 +26,7 @@ static const char *colors[][3]      = {
 
 static const char *const autostart[] = {
 	"hsetroot", "-cover", "/home/tim/git/dwm/assets/background.jpg", NULL,
-	"sh", "-c", "while :; do xsetroot -name \"$(date +\'%a %d. %b %Y, %R\')\"; sleep 60; done", NULL,
-	"sh", "-c", "/home/tim/git/dwm/assets/displayhandler", NULL,
+	"sh", "-c", "while :; do xsetroot -name \"$(date +\'%a %d. %b %Y, %R \')\"; sleep 60; done", NULL,
 	"insync", "start", NULL,
 	"udiskie", NULL,
 	"dunst", NULL,
@@ -80,7 +79,7 @@ static const char *floatingterm[]= { TERMINAL, "-t", "float", NULL };
 static const char *ranger[]      = { TERMINAL, "-e", "ranger", NULL };
 static const char *literature[]  = { TERMINAL, "-e", "ranger", "/home/tim/Literatur/", NULL };
 static const char *studying[]    = { TERMINAL, "-e", "ranger", "/home/tim/Studium/", NULL };
-static const char *julia[]       = { TERMINAL, "-e", "julia", NULL };
+/* static const char *julia[]       = { TERMINAL, "-e", "julia", NULL }; // Temporarily deactivated, because not needed*/
 static const char *python[]      = { TERMINAL, "-e", "ipython", NULL };
 static const char *htop[]        = { TERMINAL, "-e", "htop", "-t", NULL};
 static const char *screenshot[]  = { "spectacle",  NULL };
@@ -89,6 +88,9 @@ static const char *lum_down[]    = { "light", "-U", "5", NULL};
 static const char *vol_up[]      = { "amixer", "set", "Master", "unmute", "3%+", "-q", NULL };
 static const char *vol_down[]    = { "amixer", "set", "Master", "unmute", "3%-", "-q", NULL };
 static const char *vol_mute[]    = { "amixer", "set", "Master", "toggle", "-q", NULL };
+static const char *player_toggle[] = { "playerctl", "play-pause", NULL };
+static const char *player_next[] = { "playerctl", "next", NULL };
+static const char *player_prev[] = { "playerctl", "previous", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -99,7 +101,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      spawn,          {.v = studying } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = literature } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = python } },
-	{ MODKEY|ShiftMask,             XK_j,      spawn,          {.v = julia } },
+	/* { MODKEY|ShiftMask,             XK_j,      spawn,          {.v = julia } }, */
 	{ MODKEY,                       XK_h,      spawn,          {.v = htop } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -140,6 +142,9 @@ static Key keys[] = {
     { 0,                            0x1008ff02,spawn,          {.v = lum_up } },
     { 0,                            0x1008ff03,spawn,          {.v = lum_down } },
     { 0,                            0x1008ff12,spawn,          {.v = vol_mute } },
+	{ 0,                            0x1008ff14,spawn,          {.v = player_toggle} },
+	{ 0,                            0x1008ff17,spawn,          {.v = player_next} },
+	{ 0,                            0x1008ff16,spawn,          {.v = player_prev} },
     { 0,                            XK_Print,  spawn,          {.v = screenshot } },
 };
 
