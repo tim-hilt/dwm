@@ -24,6 +24,6 @@ cp ../config.def.h .
 make
 sudo make install
 
-# TODO: Copy and activate udev-rule
 # TODO: Install packages that are needed for ecosystem
 # TODO: Print messages in the different stages of the install-process
+# TODO: Copy background to suitable directory (~/Pictures/Wallpapers)

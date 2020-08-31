@@ -25,6 +25,7 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
+	"autorandr", "--change", NULL,
 	"hsetroot", "-cover", "/home/tim/git/dwm/assets/background.jpg", NULL,
 	"sh", "-c", "while :; do xsetroot -name \"$(date +\'%a %d. %b %Y, %R \')\"; sleep 60; done", NULL,
 	"insync", "start", NULL,
