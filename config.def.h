@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 20;       /* snap pixel */
 static const unsigned int gappih    = 60;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 60;       /* vert inner gap between windows */
@@ -29,10 +29,10 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
 	"autorandr", "--change", NULL,
 	"hsetroot", "-cover", "/home/tim/git/dwm/assets/background.jpg", NULL,
-	"sh", "-c", "while :; do xsetroot -name \"$(LC_ALL=de_DE.utf8 date +\'%A, %d. %B %Y, %R \')\"; sleep 60; done", NULL,
-	"insync", "start", NULL,
-	"udiskie", NULL,
-	"dunst", NULL,
+	"sh", "-c", "while :; do xsetroot -name \"$(LC_ALL=de_DE.utf8 date +\'%A, %d. %B %Y, %R \')\";"
+	"if [[ \"$(cat /sys/class/power_supply/BAT0/status)\" = \"Discharging\" && $(cat /sys/class/power_supply/BAT0/capacity) -lt 10 ]];"
+	"then dunstify \"Battery at $(cat /sys/class/power_supply/BAT0/capacity)%!\"; fi; sleep 60; done", NULL,
+	"insync", "start", NULL, "mpris-proxy", NULL, "udiskie", NULL, "dunst", NULL, "picom", NULL,
 	NULL /* terminate */
 };
 
@@ -147,6 +147,7 @@ static Key keys[] = {
     { 0,                            0x1008ff03,spawn,          {.v = lum_down } },
     { 0,                            0x1008ff12,spawn,          {.v = vol_mute } },
 	{ 0,                            0x1008ff14,spawn,          {.v = player_toggle} },
+	{ 0,                            0x1008ff31,spawn,          {.v = player_toggle} },
 	{ 0,                            0x1008ff17,spawn,          {.v = player_next} },
 	{ 0,                            0x1008ff16,spawn,          {.v = player_prev} },
     { 0,                            XK_Print,  spawn,          {.v = screenshot } },

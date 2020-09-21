@@ -1,0 +1,13 @@
+diff --git a/dwm.c b/dwm.c
+index 349edff..6cabc13 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1211,7 +1211,7 @@ monocle(Monitor *m)
+ 	if (n > 0) /* override layout symbol */
+ 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n);
+ 	for (c = nexttiled(m->clients); c; c = nexttiled(c->next))
+-		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
++		resize(c, m->wx + m->gappov*enablegaps, m->wy + m->gappoh*enablegaps, m->ww - 2 * c->bw - 2 * m->gappov*enablegaps, m->wh - 2 * c->bw - 2 * m->gappoh*enablegaps, 0);
+ }
+ 
+ void
