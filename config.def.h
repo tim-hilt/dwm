@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 20;       /* snap pixel */
 static const unsigned int gappih    = 60;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 60;       /* vert inner gap between windows */
@@ -32,7 +32,7 @@ static const char *const autostart[] = {
 	"sh", "-c", "while :; do xsetroot -name \"$(LC_ALL=de_DE.utf8 date +\'%A, %d. %B %Y, %R \')\";"
 	"if [[ \"$(cat /sys/class/power_supply/BAT0/status)\" = \"Discharging\" && $(cat /sys/class/power_supply/BAT0/capacity) -lt 10 ]];"
 	"then dunstify \"Battery at $(cat /sys/class/power_supply/BAT0/capacity)%!\"; fi; sleep 60; done", NULL,
-	"insync", "start", NULL, "mpris-proxy", NULL, "udiskie", NULL, "dunst", NULL, "picom", NULL,
+	"insync", "start", NULL, "mpris-proxy", NULL, "udiskie", NULL, "dunst", NULL, // "picom", NULL,
 	NULL /* terminate */
 };
 
@@ -71,6 +71,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
+#define HOLDKEY 0xffe4 // Right Control-Key
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 #define TERMINAL "alacritty"
@@ -107,7 +108,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = python } },
 	/* { MODKEY|ShiftMask,             XK_j,      spawn,          {.v = julia } }, */
 	{ MODKEY,                       XK_h,      spawn,          {.v = htop } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
@@ -151,6 +152,7 @@ static Key keys[] = {
 	{ 0,                            0x1008ff17,spawn,          {.v = player_next} },
 	{ 0,                            0x1008ff16,spawn,          {.v = player_prev} },
     { 0,                            XK_Print,  spawn,          {.v = screenshot } },
+	{ 0,                            HOLDKEY,   holdbar,        {0} },
 };
 
 /* button definitions */
