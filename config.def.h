@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int snap      = 20;       /* snap pixel */
+static const unsigned int snap      = 0;       /* snap pixel */
 static const unsigned int gappih    = 60;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 60;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 60;       /* horiz outer gap between windows and screen edge */
@@ -32,7 +32,8 @@ static const char *const autostart[] = {
 	"sh", "-c", "while :; do xsetroot -name \"$(LC_ALL=de_DE.utf8 date +\'%A, %d. %B %Y, %R \')\";"
 	"if [[ \"$(cat /sys/class/power_supply/BAT0/status)\" = \"Discharging\" && $(cat /sys/class/power_supply/BAT0/capacity) -lt 10 ]];"
 	"then dunstify \"Battery at $(cat /sys/class/power_supply/BAT0/capacity)%!\"; fi; sleep 60; done", NULL,
-	"insync", "start", NULL, "mpris-proxy", NULL, "udiskie", NULL, "dunst", NULL, "picom", NULL,
+	"xset", "b", "off", NULL,
+	"insync", "start", NULL, "mpris-proxy", NULL, "udiskie", NULL, "dunst", NULL,
 	NULL /* terminate */
 };
 
@@ -86,7 +87,7 @@ static const char *ranger[]      = { TERMINAL, "-e", "ranger", NULL };
 /* static const char *studying[]    = { TERMINAL, "-e", "ranger", "/home/tim/Studium/", NULL }; */
 /* static const char *julia[]       = { TERMINAL, "-e", "julia", NULL }; // Temporarily deactivated, because not needed*/
 static const char *python[]      = { TERMINAL, "-e", "ipython", NULL };
-static const char *htop[]        = { TERMINAL, "-e", "htop", "-t", NULL};
+static const char *htop[]        = { TERMINAL, "-e", "htop", NULL};
 static const char *screenshot[]  = { "spectacle",  NULL };
 static const char *lum_up[]      = { "light", "-A", "5", NULL};
 static const char *lum_down[]    = { "light", "-U", "5", NULL};
@@ -113,12 +114,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_plus,   incrgaps,       {.i = +1 } },
-	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -1 } },
-	{ MODKEY,                       XK_o,      incrogaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_o,      incrogaps,      {.i = -1 } },
-	{ MODKEY,                       XK_i,      incrigaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY,                       XK_plus,   incrgaps,       {.i = +5 } },
+	{ MODKEY,                       XK_minus,  incrgaps,       {.i = -5 } },
+	{ MODKEY,                       XK_o,      incrogaps,      {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_o,      incrogaps,      {.i = -5 } },
+	{ MODKEY,                       XK_i,      incrigaps,      {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_i,      incrigaps,      {.i = -5 } },
 	{ MODKEY,                       XK_0,      togglegaps,     {0} },
 	{ MODKEY|ShiftMask,             XK_0,      defaultgaps,    {0} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
