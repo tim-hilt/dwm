@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env sh
 
 set -euo pipefail
 
@@ -20,9 +20,9 @@ done
 sed -i '/\[EnterNotify\] = enternotify,/d' dwm.c
 sed -i '/static void enternotify(XEvent \*e)\;/d' dwm.c
 
-cp ../config.def.h .
-make
-sudo make install
+# cp ../config.def.h .
+# make
+# sudo make install
 
 # TODO: Install packages that are needed for ecosystem
 # TODO: Print messages in the different stages of the install-process
