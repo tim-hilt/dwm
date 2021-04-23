@@ -25,13 +25,14 @@ make || exit 1
 
 popd
 cp ./assets/background.jpg /home/$USER/Pictures/
-cp ./src/$(ls src) ../dwm-src/
+cd ./src
+cp $(ls) ../../dwm-src/
 
-if [ ! -d ../dwm-src/ ]
+if [ ! -d ../../dwm-src/ ]
 then
   git clone git@github.com:tim-hilt/dwm-src.git
 fi
 
-cd ../dwm-src/
-git commit -am "bump"
+cd ../../dwm-src/
+git commit -am "bump: $(date)"
 git push -u origin main
