@@ -27,6 +27,11 @@ popd
 cp ./assets/background.jpg /home/$USER/Pictures/
 cp ./src/$(ls src) ../dwm-src/
 
+if [ ! -d ../dwm-src/ ]
+then
+  git clone git@github.com:tim-hilt/dwm-src.git
+fi
+
 cd ../dwm-src/
 git commit -am "bump"
 git push -u origin main
