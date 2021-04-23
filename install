@@ -8,7 +8,7 @@ then
 fi
 
 git clone https://git.suckless.org/dwm ./src/
-cd ./src/
+pushd ./src/
 
 for file in ../patches/*
 do
@@ -20,10 +20,9 @@ done
 sed -i '/\[EnterNotify\] = enternotify,/d' dwm.c
 sed -i '/static void enternotify(XEvent \*e)\;/d' dwm.c
 
-# cp ../config.def.h .
-# make
+cp ../config.def.h .
+make
 # sudo make install
 
-# TODO: Install packages that are needed for ecosystem
-# TODO: Print messages in the different stages of the install-process
-# TODO: Copy background to suitable directory (~/Pictures/Wallpapers)
+popd
+cp ./assets/background.jpg /home/$USER/Pictures/
