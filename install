@@ -21,8 +21,12 @@ sed -i '/\[EnterNotify\] = enternotify,/d' dwm.c
 sed -i '/static void enternotify(XEvent \*e)\;/d' dwm.c
 
 cp ../config.def.h .
-make
-# sudo make install
+make || exit 1
 
 popd
 cp ./assets/background.jpg /home/$USER/Pictures/
+cp ./src/$(ls src) ../dwm-src/
+
+cd ../dwm-src/
+git commit -am "bump"
+git push -u origin main
