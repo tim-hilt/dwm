@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 0;       /* snap pixel */
 static const unsigned int gappih    = 60;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 60;       /* vert inner gap between windows */
@@ -15,20 +15,19 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#191c21";
-static const char col_gray2[]       = "#282c34";
-static const char col_gray3[]       = "#bbc2cf";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#51afef";
+static const char col_gray1[]       = "#24292e";
+static const char col_gray2[]       = "#4c535b";
+static const char col_gray3[]       = "#cccccc";
+static const char col_gray4[]       = "#7e90a1";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray3, col_gray2, col_cyan  },
+	[SchemeSel]  = { col_gray3, col_gray2, col_gray4  },
 };
 
 static const char *const autostart[] = {
 	"autorandr", "--change", NULL,
-	"hsetroot", "-cover", "/home/tim/Pictures/background.jpg", NULL,
+	"hsetroot", "-solid", "#15191B", NULL,
 	"sh", "-c", "while :; do xsetroot -name \"$(LC_ALL=de_DE.utf8 date +\'%A, %d. %B %Y, %R\'), $(cat /sys/class/power_supply/BAT0/capacity)%\";"
 	"if [[ \"$(cat /sys/class/power_supply/BAT0/status)\" = \"Discharging\" && $(cat /sys/class/power_supply/BAT0/capacity) -lt 10 ]];"
 	"then dunstify \"Battery at $(cat /sys/class/power_supply/BAT0/capacity)%!\"; fi; sleep 60; done", NULL,
@@ -82,9 +81,6 @@ static const char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufo
 static const char *termcmd[]     = { TERMINAL, NULL };
 static const char *floatingterm[]= { TERMINAL, "-t", "float", NULL };
 static const char *ranger[]      = { TERMINAL, "-e", "ranger", NULL };
-/* static const char *literature[]  = { TERMINAL, "-e", "ranger", "/home/tim/Literatur/", NULL }; */
-/* static const char *studying[]    = { TERMINAL, "-e", "ranger", "/home/tim/Studium/", NULL }; */
-/* static const char *julia[]       = { TERMINAL, "-e", "julia", NULL }; // Temporarily deactivated, because not needed*/
 static const char *python[]      = { TERMINAL, "-e", "ipython", NULL };
 static const char *htop[]        = { TERMINAL, "-e", "htop", NULL};
 static const char *screenshot[]  = { "spectacle",  NULL };
@@ -103,10 +99,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_t,      spawn,          {.v = floatingterm } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = ranger } },
-	/* { MODKEY,                       XK_s,      spawn,          {.v = studying } }, */
-	/* { MODKEY,                       XK_l,      spawn,          {.v = literature } }, */
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = python } },
-	/* { MODKEY|ShiftMask,             XK_j,      spawn,          {.v = julia } }, */
 	{ MODKEY,                       XK_h,      spawn,          {.v = htop } },
 	/* { MODKEY,                       XK_b,      togglebar,      {0} }, */
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
