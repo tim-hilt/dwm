@@ -9,7 +9,7 @@
       xorg.libXft
       xorg.libXinerama
       gnumake
-      clang
+      gcc
     ]; };
   };
 }
